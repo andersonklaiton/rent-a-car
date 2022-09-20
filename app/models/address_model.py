@@ -24,4 +24,4 @@ class Address(db.Model):
     city = Column(String, nullable = False)
     reference = Column(String, nullable = False)
     state_id = Column(Integer, ForeignKey('tb_state.state_id'), nullable = False)
-    address = relationship("Users", back_populates='user_addres', uselist=False)
+    address = relationship("Users", back_populates='user_address', uselist=False)
