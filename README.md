@@ -37,9 +37,9 @@ api: http://127.0.0.1:5000
 | :------: | :----: | :----: |
 | `/users` | `Post` | `201`  |
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"cnh": "12345678910",
 	"cpf": "12345678910",
@@ -59,9 +59,9 @@ api: http://127.0.0.1:5000
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"cnh": "12345678910",
 	"cpf": "12345678910",
@@ -89,9 +89,9 @@ api: http://127.0.0.1:5000
 | :------: | :----: | :----: |
 | `/users` | `Get`  | `200`  |
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"cnh": "12345678910",
 	"cpf": "12345678910",
@@ -120,9 +120,9 @@ api: http://127.0.0.1:5000
 | :----------: | :----: | :----: |
 | `/users/cnh` | `Get`  | `200`  |
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"cnh": "12345678910",
 	"cpf": "12345678910",
@@ -151,9 +151,9 @@ api: http://127.0.0.1:5000
 | :------------------: | :-----: | :----: |
 | `/users/12345678910` | `Patch` | `200`  |
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"cnh": "12345678911",
 	"cpf": "12345678911",
@@ -172,9 +172,9 @@ api: http://127.0.0.1:5000
 	}
 }
 ```
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
   "cnh": "12345678910",
   "cpf": "12345678910",
@@ -213,9 +213,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :---------: | :----: | :----: |
 | `/address` | `Get`  | `200`  |
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 [
 	{
 		"Minas Gerais":[
@@ -267,9 +267,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 
 
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"rental_date": "03/05/2022",
 	"rental_return_date": "04/05/2022",
@@ -279,9 +279,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"rental_id": 1,
 	"rental_date": "Thu, 03 May 2022 00:00:00 GMT",
@@ -309,9 +309,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 
 
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"rental_return_date": "11/03/2022",
 	"rental_total_days": 3,
@@ -320,9 +320,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"rental_id": 3,
 	"rental_date": "Tue, 08 Mar 2022 00:00:00 GMT",
@@ -351,9 +351,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 
 
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"rental_real_return_date": "06/03/2022",
 	"rental_real_total_days": 2,
@@ -363,9 +363,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"rental_id": 7,
 	"rental_date": "Thu, 03 May 2022 00:00:00 GMT",
@@ -392,9 +392,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | `/rentals` | `Get`  | `200`  |
 
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 [
 	{
 		"rental_id": 3,
@@ -440,9 +440,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | `/rentals/plate/{placa}` | `Get`  | `200`  |
 
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
     "rental_id": 3,
     "rental_date": "Thu, 03 Mar 2022 00:00:00 GMT",
@@ -469,9 +469,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | `/rentals/all/{cnh}` | `Get`  | `200`  |
 
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 [
 	{
 		"rental_id": 3,
@@ -517,9 +517,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | `/rentals/current/{cnh}` | `Get`  | `200`  |
 
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
 	"rental_id": 7,
 	"rental_date": "Thu, 03 Mar 2022 00:00:00 GMT",
@@ -558,9 +558,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :------------: | :----: | :----: |
 | `/maintenance` | `Post` | `201`  |
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
     "last_maintenance": "03/01/2022",
     "next_maintenance": "03/03/2022",
@@ -570,9 +570,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
   "maintenance_id": 1,
   "last_maintenance": "03/01/2022",
@@ -589,9 +589,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :--------------------: | :----: | :----: |
 | `/maintenance/{plate}` | `Get`  | `200`  |
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
   "maintenance_id": 1,
   "last_maintenance": "03/01/2022",
@@ -608,9 +608,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :---------------: | :-----: | :----: |
 | `/maintenance/id` | `Patch` | `200`  |
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
     "last_maintenance": "02/01/2022",
     "next_maintenance": "03/04/2022",
@@ -619,9 +619,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
   "maintenance_id": 1,
   "last_maintenance": "02/01/2022",
@@ -641,9 +641,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :-----: | :----: | :----: |
 | `/cars` | `Post` | `201`  |
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"chassi": "2H2XA59BWDY987695",
 	"license_plate": "BRA1E31",
@@ -659,11 +659,24 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
-
+	"chassi": "2H2XA59BWDY987695",
+	"license_plate": "BRA1E31",
+	"brand": "FIAT",
+	"model": "Toro",
+	"year": "21/22",
+	"color_car": "Branca",
+	"image": "https://bali.com.br/wp-content/uploads/bfi_thumb/TORO_FREEDOM-1-70mbkij6i1c5r3hq1nri58sbhq7665gwx4j8tl5cv4q.png",
+	"current_km": 2000.1,
+	"licensing_expiration": "12/01/2023",
+	"daily_rental_price": 209.9,
+	"daily_fixed_km": 120,
+	"available":true,
+	"category_id":1,
+	"maintenance_id":null
 }
 ```
 
@@ -675,11 +688,27 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | `/cars` | `Get`  | `200`  |
 
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
-
+	"chassi": "2H2XA59BWDY987695",
+	"license_plate": "BRA1E31",
+	"brand": "FIAT",
+	"model": "Toro",
+	"year": "21/22",
+	"color_car": "Branca",
+	"image": "https://bali.com.br/wp-content/uploads/bfi_thumb/TORO_FREEDOM-1-70mbkij6i1c5r3hq1nri58sbhq7665gwx4j8tl5cv4q.png",
+	"current_km": 2000.1,
+	"licensing_expiration": "12/01/2023",
+	"daily_rental_price": 209.9,
+	"daily_fixed_km": 120,
+	"available":true,
+	"category_id":1,
+	"maintenance_id":null
+},
+{
+	...
 }
 ```
 
@@ -690,12 +719,27 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :--------------: | :----: | :----: |
 | `/cars/{plate}` | `Get`  | `200`  |
 
-**Response** - `json`
+**Response** 
 
-```
-{
-
-}
+```JSON
+[
+	{
+		"chassi": "2H2XA59BWDY987695",
+		"license_plate": "BRA1E31",
+		"brand": "FIAT",
+		"model": "Toro",
+		"year": "21/22",
+		"color_car": "Branca",
+		"image": "https://bali.com.br/wp-content/uploads/bfi_thumb/TORO_FREEDOM-1-70mbkij6i1c5r3hq1nri58sbhq7665gwx4j8tl5cv4q.png",
+		"current_km": 2000.1,
+		"licensing_expiration": "12/01/2023",
+		"daily_rental_price": 209.9,
+		"daily_fixed_km": 120,
+		"available":true,
+		"category_id":1,
+		"maintenance_id":null
+	}
+]
 ```
 
 
@@ -706,12 +750,27 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | `/cars?available=true`  | `Get`  | `200`  |
 | `/cars?available=false` | `Get`  | `200`  |
 
-**Response** - `json`
+**Response** 
 
-```
-{
-
-}
+```JSON
+[
+	{
+		"chassi": "2H2XA59BWDY987695",
+		"license_plate": "BRA1E31",
+		"brand": "FIAT",
+		"model": "Toro",
+		"year": "21/22",
+		"color_car": "Branca",
+		"image": "https://bali.com.br/wp-content/uploads/bfi_thumb/TORO_FREEDOM-1-70mbkij6i1c5r3hq1nri58sbhq7665gwx4j8tl5cv4q.png",
+		"current_km": 2000.1,
+		"licensing_expiration": "12/01/2023",
+		"daily_rental_price": 209.9,
+		"daily_fixed_km": 120,
+		"available":true,
+		"category_id":1,
+		"maintenance_id":null
+	}
+]
 ```
 
 
@@ -721,9 +780,9 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 | :--------------: | :-----: | :----: |
 | `/cars/{chassi}` | `Patch` | `200`  |
 
-**Body** - `json`
+**Body** 
 
-```
+```JSON
 {
 	"license_plate": "BRA1E31",
 	"brand": "FIAT",
@@ -744,11 +803,24 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 }
 ```
 
-**Response** - `json`
+**Response** 
 
-```
+```JSON
 {
-
+	"chassis": "2H2XA59BWDY987695",
+	"license_plate": "BRA1E31",
+	"brand": "FIAT",
+	"model": "Toro",
+	"year": "21/22",
+	"car_color": "Branca",
+	"image": "https://bali.com.br/wp-content/uploads/bfi_thumb/TORO_FREEDOM-1-70mbkij6i1c5r3hq1nri58sbhq7665gwx4j8tl5cv4q.png",
+	"current_km": 2000.1,
+	"licensing_expiration": "Thu, 12 Jan 2023 00:00:00 GMT",
+	"daily_rental_price": 209.9,
+	"daily_fix_km": 120,
+	"available": true,
+	"category_id": 1,
+	"maintenance_id": null
 }
 ```
 
@@ -756,12 +828,4 @@ Endereço será cadastrado juntamente com o corpo da requisição do cliente, ca
 
 |       url        |  metodo  | status |
 | :--------------: | :------: | :----: |
-| `/cars/{chassi}` | `Delete` | `200`  |
-
-**Response**
-
-```
-{
-
-}
-```
+| `/cars/{chassi}` | `Delete` | `204`  |
