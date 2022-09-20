@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from array import array
 from sqlalchemy import Column, Integer, DateTime, Float, String
 from datetime import date
 
@@ -20,7 +21,7 @@ class Maintenance(db.Model):
     maintenance_id = Column(Integer, primary_key = True)
     last_maintenance = Column(DateTime, nullable = False)
     next_maintenance = Column(DateTime, nullable = False)
-    repaired_items = Column(db.Array(String), nullable = False)
+    repaired_items = Column(db.ARRAY(String), nullable = False)
     maintenance_price = Column(Float, nullable = False)
     car_license_plate = Column(String, nullable = False)
 
