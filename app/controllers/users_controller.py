@@ -1,55 +1,62 @@
-from sqlite3 import IntegrityError
-from flask import request, jsonify, current_app
+from flask import request, jsonify, current_app, render_template
+from flask_mail import Message, Mail
 from dotenv import load_dotenv
 from http import HTTPStatus
-from werkzeug.exceptions import NotFound
 import os, json
 from app.controllers.address_controller import create_address
 from app.models.address_model import Address
 from app.models.state_model import States
 
+
 from app.models.users_model import Users
 
 from app.configs.database import db
+
+from sqlalchemy.exc import IntegrityError
+
+from werkzeug.exceptions import NotFound
+
 
 load_dotenv()
 
 attributes = json.loads(os.getenv('ATTRIBUTES_USER'))
 
 def create_user():
+
     data = request.get_json()
 
     address = data.pop("address")
-
+    
     returned_address = create_address(address, "create_user")
 
     if type(returned_address) == tuple:
-        if returned_address[1]==0:
-            return {'error': f"Missing keys for address: {returned_address[0]}"}, HTTPStatus.CONFLICT
+        if returned_address[1] == 0:
+            return {"Error":f"Missing keys for address: {returned_address[0]}"}, HTTPStatus.CONFLICT
         else:
-            return {"error": f"Address attibutes must be string: {returned_address[0]}"}, HTTPStatus.CONFLICT
-
+            return {"Error": f"Address attributes must be strings {returned_address[0]}"}, HTTPStatus.CONFLICT
+    
     missing_keys = []
 
     for attribute in attributes:
         if attribute not in data.keys():
             missing_keys.append(attribute)
-    
-    if len(missing_keys)>0:
-        return {"error":f"Missing keys for user: {missing_keys}"}, HTTPStatus.BAD_REQUEST
-    
+
+    if len(missing_keys) > 0:
+        return {'Error': f'Missing Keys for user: {missing_keys}'}, HTTPStatus.BAD_REQUEST
+
     for attribute in data.items():
-        if type(attribute[0])!= str:
-            return {"error":f"{attribute[0]} must be a string"}, HTTPStatus.BAD_REQUEST
-    
+        if type(attribute[0]) != str:
+            return {'Error': f'{attribute[0]} must be a string'}, HTTPStatus.BAD_REQUEST
     try:
         user = Users(**data)
         user.id_address = returned_address["id"]
-    
-    except TypeError:
-        return {"error":"Type error bad request"}, HTTPStatus.BAD_REQUEST
+        
+    except TypeError as e:
+        return {'Error':'Type error bad request'}, HTTPStatus.BAD_REQUEST
 
+    
     try:
+        
         db.session.add(user)
         db.session.commit()
 
@@ -59,11 +66,14 @@ def create_user():
         user_keys = ["cnh", "cpf", "name", "email", "phone", "category_cnh", "user_address"]
         user_values = [user.cnh, user.cpf, user.name, user.email, user.phone, user.category_cnh, completed_address]
 
+        
         response = dict(zip(user_keys, user_values))
-
+        
+       
     except IntegrityError:
-        return {"error":"CNH, CPF, email or phone already registred"}, HTTPStatus.CONFLICT
+        return {'Error': 'CNH, CPF, email or phone already registered'}, HTTPStatus.CONFLICT
     
+
     return jsonify(response), HTTPStatus.CREATED
 
 
