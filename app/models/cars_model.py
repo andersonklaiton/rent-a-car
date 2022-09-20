@@ -12,12 +12,12 @@ class Cars(db.Model):
     brand: str
     model: str
     year: str
-    car_collor: str
+    car_color: str
     image: str
     current_km: float
     licensing_expiration: date
     daily_rental_price: float
-    daily_fixe_km: int
+    daily_fix_km: int
     available: bool
     category_id: int
     maintenance_id: int
@@ -29,13 +29,13 @@ class Cars(db.Model):
     brand = Column(String, nullable = False)
     model = Column(String, nullable = False)
     year = Column(String, nullable = False)
-    car_collor = Column(String, nullable = False)
+    car_color = Column(String, nullable = False)
     image = Column(String, nullable = False)
     current_km = Column(Float, nullable = False)
     licensing_expiration = Column(DateTime, nullable = False)
     daily_rental_price = Column(Float, nullable = False)
-    daily_fixe_km = Column(Integer, nullable = False)
+    daily_fix_km = Column(Integer, nullable = False)
     available = Column(Boolean, default = True)
 
     category_id = Column(Integer, ForeignKey('tb_category_car.category_id'), nullable = False)
-    maintenance_id = Column(Integer, ForeignKey('tb_maintenance_car.maintenance_id'), nullable = False)
+    maintenance_id = Column(Integer, ForeignKey('tb_maintenance_car.maintenance_id'))
