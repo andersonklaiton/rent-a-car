@@ -9,6 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from app.models.cars_model import Cars
 from app.models.category_car_model import Category_car
 from app.configs.database import db
+from app.models.rental_cars_model import RentalCars
 
 
 load_dotenv()
@@ -56,15 +57,9 @@ def create_car():
         category_dict = {
             'category_id': created_category.category_id
         }
-
-    try:
-        car = Cars(**data, **category_dict)
-    except TypeError as e:
-        return {'Error': 'Type error bad request'}, HTTPStatus.BAD_REQUEST
-
-    if len(data.get('chassi')) != 17:
+        
+    if len(data.get('chassis')) != 17:
         return {'Error': f'Chassis field must be 17 characters long'}, HTTPStatus.BAD_REQUEST
-
 
     missing_keys = []
 
@@ -76,7 +71,7 @@ def create_car():
         return {'Error': f'Missing Keys: {missing_keys}'}, HTTPStatus.BAD_REQUEST
 
 
-    exceptions_keys_data = ['current_km', 'daily_rental_price', 'daily_fixed_km']
+    exceptions_keys_data = ['current_km', 'daily_rental_price', 'daily_fix_km']
 
     for attribute in data.items():
 
@@ -84,12 +79,16 @@ def create_car():
             if type(attribute[1]) != str:
                 return {'Error': f'{attribute[0]} must be a string'}, HTTPStatus.BAD_REQUEST
         else:
-            if attribute[0] == 'daily_fixed_km':
+            if attribute[0] == 'daily_fix_km':
                 if type(attribute[1]) != int:
                     return {'Error': f'{attribute[0]} must be a int number'}, HTTPStatus.BAD_REQUEST
             else:
                 if type(attribute[1]) != float:
                     return {'Error': f'{attribute[0]} must be a float number'}, HTTPStatus.BAD_REQUEST
+    try:
+        car = Cars(**data, **category_dict)
+    except TypeError as e:
+        return {'Error': 'Type error bad request'}, HTTPStatus.BAD_REQUEST
 
     try:
         db.session.add(car)
@@ -129,16 +128,15 @@ def get_all_cars():
     return jsonify(record_all_cars), HTTPStatus.OK
 
 
-def update_car(chassi):
+def update_car(chassis):
     data = request.get_json()
+    
 
-    if len(chassi) != 17:
+    if len(chassis) != 17:
             return {'Error': f'Chassis field must be 17 characters long'}, HTTPStatus.BAD_REQUEST
 
 
-    car_update = Cars.query.get(chassi)
-
-    print(car_update)
+    car_update = Cars.query.get(chassis)
 
     if not car_update:
         return {'Error': f'Records not found'}, HTTPStatus.NOT_FOUND
@@ -151,26 +149,33 @@ def update_car(chassi):
     current_app.db.session.commit()
 
 
-    return "", HTTPStatus.NO_CONTENT
+    return jsonify(car_update), HTTPStatus.OK
 
 
-def remove_car(chassi):
-    data = request.get_json()
+def remove_car(chassis):
 
-    if len(chassi) != 17:
+    if len(chassis) != 17:
         return {'Error': f'Chassis field must be 17 characters long'}, HTTPStatus.BAD_REQUEST
     
-    car_delete = Cars.query.filter_by(chassi=chassi)
+    car_delete = Cars.query.get(chassis)
 
+    try:
 
-    if not car_delete.all():
-        return {'Error': f'Records not found'}, HTTPStatus.NOT_FOUND
+        if car_delete.available:
+            rentals = RentalCars.query.filter_by(car_license_plate= car_delete.license_plate).all()
+            for rental in rentals:
+                current_app.db.session.delete(rental)
+                current_app.db.session.commit()
 
-    car_delete.delete()
-    current_app.db.session.commit()
+        if not car_delete:
+            return {'Error': 'This chassis is not registered'}, HTTPStatus.NOT_FOUND
 
-    return "", HTTPStatus.NO_CONTENT
+        current_app.db.session.delete(car_delete)
+        current_app.db.session.commit()
 
+        return "", HTTPStatus.NO_CONTENT
+    except IntegrityError:
+        return {"error":"This car is rented, can't be deleted"}, HTTPStatus.UNAUTHORIZED
 
 
 def search_car(license_plate):
@@ -179,11 +184,9 @@ def search_car(license_plate):
 
     cars_search = Cars.query.filter(Cars.license_plate.like(f'%{license_plate_upper}%'))
 
-    print(cars_search)
-    print(cars_search.all())
 
     if not cars_search.all():
-        return {'Error': f'Records not found'}, HTTPStatus.NOT_FOUND
+        return {'Error': f'This plate is not registered'}, HTTPStatus.NOT_FOUND
         
 
     car_search = cars_search.all()

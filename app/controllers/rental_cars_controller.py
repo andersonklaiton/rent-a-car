@@ -118,7 +118,7 @@ def return_car():
             'rental_real_return_date': data['rental_real_return_date'],
             'returned_car': True,
             'rental_real_total_days': data['rental_real_total_days'],
-            'final_km': data['total_returned_km'] - rental_not_returned.initial_km,
+            'final_km': data['total_returned_km'] + rental_not_returned.initial_km,
             'total_returned_km': data['total_returned_km'],
             'rental_real_value': rental_not_returned.rental_value + to_pay_per_km + to_pay_per_day
         }
@@ -127,21 +127,21 @@ def return_car():
             setattr(rental_not_returned, key, value)
         
         setattr(car_to_be_returned, 'available', True)
-        setattr(car_to_be_returned, 'current_km', data['total_returned_km'])
+        setattr(car_to_be_returned, 'current_km', data['total_returned_km'] + rental_not_returned.initial_km)
 
         current_app.db.session.add(rental_not_returned)
         current_app.db.session.add(car_to_be_returned)
         current_app.db.session.commit()
 
         rental_not_returned.rental_real_return_date = rental_not_returned.rental_real_return_date.strftime("%d/%m/%Y")
-
+        rental_not_returned.rental_date = rental_not_returned.rental_date.strftime("%d/%m/%Y")
         def flask_mail(email):
             mail: Mail = current_app.mail
             msg = Message(
                 subject="Confirmação de devolução",
                 sender=os.getenv("MAIL_USERNAME"),
                 recipients=[email],
-                html=render_template("email/template2.html", name=is_cnh_in_database.name, cnh=rental_not_returned.customer_cnh, plate=rental_not_returned.car_license_plate, rental_date=rental_not_returned.rental_date, real_return_date=rental_not_returned.rental_real_return_date, total_days=rental_not_returned.rental_real_total_days, fixed_km=rental_not_returned.total_fixed_km, final_km=rental_not_returned.final_km, rental_real_value=rental_not_returned.rental_real_value)
+                html=render_template("email/template2.html", name=is_cnh_in_database.name, cnh=rental_not_returned.customer_cnh, plate=rental_not_returned.car_license_plate, rental_date=rental_not_returned.rental_date, real_return_date=rental_not_returned.rental_real_return_date, rental_real_total_days=rental_not_returned.rental_total_days, fixed_km=rental_not_returned.total_fixed_km, final_km=rental_not_returned.final_km, rental_real_value=rental_not_returned.rental_real_value)
 
             )
             mail.send(msg)

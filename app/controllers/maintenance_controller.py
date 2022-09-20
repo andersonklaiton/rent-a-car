@@ -21,12 +21,9 @@ def create_maintenance():
     
     try:
         maintenance = Maintenance(**data)
-        
-        # last_maintenance = data["last_maintenance"]
-        # next_maintenance = data["next_maintenance"]
         filter_keys(incoming_keys, keys)
+        
         missing_key(incoming_keys, keys)
-        # validate_date(last_maintenance, next_maintenance)
 
         db.session.add(maintenance)
         db.session.commit()
@@ -51,7 +48,7 @@ def update_maintenance(id):
     incoming_keys = data.keys()
     keys = Maintenance.keys
     format_date = Maintenance.format_date
-    car = Cars.query.filter_by(license_plate=data.car_license_plate).one_or_none()
+    car = Cars.query.filter_by(license_plate=data['car_license_plate']).one_or_none()
 
     if car == None:
         return {'Error': 'car not found'}, HTTPStatus.NOT_FOUND
@@ -62,11 +59,7 @@ def update_maintenance(id):
         for key, value in data.items():
             setattr(maintenance, key, value)
 
-        # last_maintenance = maintenance.last_maintenance
-        # next_maintenance = maintenance.next_maintenance
-    
         filter_keys(incoming_keys, keys)
-        # validate_date(last_maintenance, next_maintenance)
         
         db.session.add(maintenance)
         db.session.commit()

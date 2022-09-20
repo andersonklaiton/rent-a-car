@@ -33,7 +33,7 @@ def get_states():
                 address_list.append(address)
             list_address_list=[]
             list_address_list.append(address_list)
-            response = dict(zip(states_list[state_id-1], list_address_list))
+            response = dict(zip(states_list[state_id-1:], list_address_list))
 
         completed_state_list.append(response)
         address_list=[]
